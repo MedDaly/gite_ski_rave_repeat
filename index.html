@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#5b3df5">
+  <title>Gîte Happens 🎉</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Password gate (shown until the group password is accepted) -->
+  <div id="gate" class="gate" hidden></div>
+
+  <!-- App shell -->
+  <div id="shell" hidden>
+    <header class="topbar">
+      <a href="#/accueil" class="brand" aria-label="Gîte Happens, accueil">
+        <span class="brand-logo" aria-hidden="true">🏔️</span>
+        <span class="brand-name">Gîte Happens</span>
+      </a>
+      <div class="topbar-actions">
+        <button type="button" id="theme-toggle" class="icon-btn" aria-label="Changer de thème">🌓</button>
+        <button type="button" id="identity-chip" class="identity-chip" aria-label="Changer d’identité">
+          <span aria-hidden="true">👤</span>
+          <span id="identity-name">…</span>
+          <span aria-hidden="true" class="caret">▾</span>
+        </button>
+      </div>
+    </header>
+
+    <main id="app" tabindex="-1"></main>
+
+    <footer class="footer">
+      <p>Fait avec ❤️ et beaucoup trop de fromage · <span id="footer-extra"></span></p>
+    </footer>
+
+    <nav class="tabbar" aria-label="Navigation principale">
+      <a href="#/accueil" data-route="accueil"><span aria-hidden="true">🏔️</span><span>Accueil</span></a>
+      <a href="#/formulaire" data-route="formulaire"><span aria-hidden="true">📝</span><span>Formulaire</span></a>
+      <a href="#/recap" data-route="recap"><span aria-hidden="true">📊</span><span>Récap</span></a>
+      <a href="#/wishlist" data-route="wishlist"><span aria-hidden="true">🏡</span><span>Gîtes</span></a>
+    </nav>
+  </div>
+
+  <div id="modal-root"></div>
+  <div id="toast-root" aria-live="polite"></div>
+
+  <noscript>Ce site a besoin de JavaScript. Promis, il ne mord pas.</noscript>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
