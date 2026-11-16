@@ -124,6 +124,9 @@ Visible to everyone, Guest included.
 | v1 scope | 4 pages: Accueil, Formulaire, Récap, Wishlist |
 | Domain | Free URL (GitHub Pages) |
 | Deadline | As soon as possible |
+| Mock mode | `js/mock-api.js` is used with `?mock=1` **or while `SUPABASE_URL` is empty**. Mock password `raclette` (demo only, not a real password). Mock data persists in localStorage; `?mock=reset` restores samples. |
+| Single-choice answers | Tap a selected chip again to clear it (every question is optional). |
+| Gîte areas | `chambery` / `aix` / `nature` / `autre`. |
 
 ---
 
@@ -243,13 +246,14 @@ Each phase is about one session and one PR.
 | Phase | Scope | Done when |
 |---|---|---|
 | **0. Spec** ✅ | This document. | Done. |
-| **1. Skeleton + mock** | Repo structure, `index.html` shell, theme (light/dark), hash router, nav, password screen, identity picker (name/add/Invité), **mock API** with sample data. | All 4 pages are reachable on a phone with mock data. |
-| **2. Pages UI** | Accueil (funny pitch in French, countdown, stats), Formulaire (all questions, edit mode, Guest lock), Récap (headcount, day grid, preference breakdown, answers list), Wishlist (cards, vote, comments, add form). | Every flow works on mock data at 390px. |
+| **1. Skeleton + mock** ✅ | Repo structure, `index.html` shell, theme (light/dark), hash router, nav, password screen, identity picker (name/add/Invité), **mock API** with sample data. | All 4 pages are reachable on a phone with mock data. |
+| **2. Pages UI** ✅ | Accueil (funny pitch in French, countdown, stats), Formulaire (all questions, edit mode, Guest lock), Récap (headcount, day grid, preference breakdown, answers list), Wishlist (cards, vote, comments, add form). | Every flow works on mock data at 390px. |
 | **3. Supabase backend** | `schema.sql` (tables, RLS, RPCs), real `api.js`, organizer setup (3.6 steps 1–2). | Data is shared between two different phones. |
 | **4. Admin + deploy** | Admin mode (delete buttons), GitHub Pages turned on, README with the live URL and how-to. | Link shared in the group chat 🎉 |
 | **5. Polish (optional)** | Animations, snow effect, OG image for link previews in WhatsApp, small fixes from friends' feedback. | Organizer happy. |
 
 ### Notes for the next session
+- **Phase 3 contract:** pages only use `js/api.js` (`checkPassword`, `getAll`, `addParticipant`, `upsertResponse`, `addGite`, `toggleVote`, `addComment`). Implement the same functions in `js/api-supabase.js` (currently a stub), each taking the group password as first argument, mirroring the validation in `js/mock-api.js`. Throw `ApiError('bad_password')` on a wrong password so the app returns to the gate.
 - **Read this spec first.** Don't change product decisions (2.7) without asking the organizer.
 - UI copy is in **French** and funny. Code, comments and this doc are in English.
 - No frameworks or build tooling. If you think one is needed, update 3.2 first and ask.
