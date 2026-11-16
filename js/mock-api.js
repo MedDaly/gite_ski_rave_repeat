@@ -2,7 +2,7 @@
 // It mirrors the validation the real RPC functions will do server-side.
 // Data is kept in localStorage so a reload keeps your test edits. Add ?mock=reset to start over.
 import { ApiError } from './errors.js';
-import { DAYS, GUEST, PREFS, AREAS, LIMITS } from './config.js';
+import { DAYS, GUEST, PREFS, LIMITS } from './config.js';
 
 export const MOCK_PASSWORD = 'raclette';
 export const MOCK_ADMIN_PASSWORD = 'admin';
@@ -178,7 +178,7 @@ export async function addGite(pw, f, addedBy) {
     photo_url: cleanUrl(f.photo_url, { field: 'photo' }),
     price: cleanText(f.price, LIMITS.price, { field: 'prix' }),
     capacity,
-    area: cleanEnum(f.area, AREAS.map((a) => a.value), 'coin'),
+    area: cleanText(f.area, LIMITS.area, { field: 'coin' }),
     description: cleanText(f.description, LIMITS.description, { field: 'description' }),
     added_by: cleanActor(addedBy),
     created_at: new Date().toISOString(),

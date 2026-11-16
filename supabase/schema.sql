@@ -45,11 +45,15 @@ create table if not exists public.gites (
   photo_url   text check (char_length(photo_url) <= 500),
   price       text check (char_length(price) <= 40),
   capacity    int check (capacity between 1 and 50),
-  area        text check (area in ('chambery', 'aix', 'nature', 'autre')),
+  area        text,
   description text check (char_length(description) <= 500),
   added_by    text not null check (char_length(added_by) between 1 and 40),
   created_at  timestamptz not null default now()
 );
+
+-- area is free text (was a fixed list): replace the old constraint, also on existing databases.
+alter table public.gites drop constraint if exists gites_area_check;
+alter table public.gites add constraint gites_area_check check (char_length(area) <= 60);
 
 create table if not exists public.votes (
   gite_id    uuid not null references public.gites(id) on delete cascade,
@@ -265,7 +269,7 @@ begin
     private.url(p_fields->>'photo_url', 'photo'),
     private.txt(p_fields->>'price', 40, 'prix'),
     v_capacity,
-    private.enum_val(p_fields->>'area', array['chambery', 'aix', 'nature', 'autre'], 'coin'),
+    private.txt(p_fields->>'area', 60, 'coin'),
     private.txt(p_fields->>'description', 500, 'description'),
     private.actor(p_added_by)
   )

@@ -10,7 +10,7 @@ export const TRIP = {
   start: '2026-12-26',
   end: '2027-01-03',
   nye: '2026-12-31',
-  // Countdown target: arrival day, midnight in Savoie (CET = UTC+1).
+  // Countdown target: arrival day, midnight in France (CET = UTC+1).
   countdownTarget: '2026-12-26T00:00:00+01:00',
   endTarget: '2027-01-04T00:00:00+01:00',
 };
@@ -70,6 +70,7 @@ export const PREFS = [
   },
 ];
 
+// Legacy values from the old "coin" dropdown (area is free text now); used only for display.
 export const AREAS = [
   { value: 'chambery', label: 'Chambéry' },
   { value: 'aix', label: 'Aix-les-Bains' },
@@ -85,6 +86,7 @@ export const LIMITS = {
   price: 40,
   description: 500,
   comment: 1000,
+  area: 60,
   capacityMax: 50,
 };
 

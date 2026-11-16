@@ -538,3 +538,6 @@ main:focus { outline: none; }
 .person-del { display: inline-flex; align-items: center; gap: 4px; }
 .person-del .del-btn { min-width: 32px; min-height: 32px; font-size: .8rem; }
 .admin-banner { background: var(--out-soft); border-color: var(--danger); }
+
+.footer .btn { color: var(--muted); }
+.logout-in-modal { align-self: center; color: var(--muted); }
