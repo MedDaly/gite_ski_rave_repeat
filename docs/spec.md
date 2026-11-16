@@ -126,6 +126,9 @@ Visible to everyone, Guest included.
 | Deadline | As soon as possible |
 | Mock mode | `js/mock-api.js` is used with `?mock=1` **or while `SUPABASE_URL` is empty**. Mock password `raclette` (demo only, not a real password). Mock data persists in localStorage; `?mock=reset` restores samples. |
 | Single-choice answers | Tap a selected chip again to clear it (every question is optional). |
+| Supabase client | **Plain `fetch` to PostgREST** (`/rest/v1/rpc/<fn>`) in `js/api-supabase.js` instead of `supabase-js`: we only call RPCs, so no SDK/CDN dependency is needed. Works with a legacy anon key or a new `sb_publishable_` key. |
+| RPC errors | Functions raise `code` or `code: detail` (`bad_password`, `invalid`, `reserved_name`, `not_found`); the frontend maps them to French messages. Admin RPCs (`admin_check`, `admin_delete`) already exist in `schema.sql` for phase 4. |
+| Admin mode | Discreet 🔧 in the footer → admin password (kept in localStorage, `gh_admin_pw`). Shows 🗑️ on gîtes, comments (Wishlist), answers and people (Récap). Votes aren't individually deletable in the UI (the RPC supports it). Mock admin password: `admin`. |
 | Gîte areas | `chambery` / `aix` / `nature` / `autre`. |
 
 ---
@@ -248,8 +251,8 @@ Each phase is about one session and one PR.
 | **0. Spec** ✅ | This document. | Done. |
 | **1. Skeleton + mock** ✅ | Repo structure, `index.html` shell, theme (light/dark), hash router, nav, password screen, identity picker (name/add/Invité), **mock API** with sample data. | All 4 pages are reachable on a phone with mock data. |
 | **2. Pages UI** ✅ | Accueil (funny pitch in French, countdown, stats), Formulaire (all questions, edit mode, Guest lock), Récap (headcount, day grid, preference breakdown, answers list), Wishlist (cards, vote, comments, add form). | Every flow works on mock data at 390px. |
-| **3. Supabase backend** | `schema.sql` (tables, RLS, RPCs), real `api.js`, organizer setup (3.6 steps 1–2). | Data is shared between two different phones. |
-| **4. Admin + deploy** | Admin mode (delete buttons), GitHub Pages turned on, README with the live URL and how-to. | Link shared in the group chat 🎉 |
+| **3. Supabase backend** ✅ | `schema.sql` (tables, RLS, RPCs), real `api.js`, organizer setup (3.6 steps 1–2). | Data is shared between two different phones. |
+| **4. Admin + deploy** ✅ | Admin mode (delete buttons), GitHub Pages turned on, README with the live URL and how-to. | Link shared in the group chat 🎉 |
 | **5. Polish (optional)** | Animations, snow effect, OG image for link previews in WhatsApp, small fixes from friends' feedback. | Organizer happy. |
 
 ### Notes for the next session

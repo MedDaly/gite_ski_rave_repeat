@@ -4,6 +4,8 @@ import { DAYS, STATUS, PREFS } from '../config.js';
 import { h, loading, errorBox, timeAgo } from '../dom.js';
 import { messageFor } from '../errors.js';
 import { people, effectiveDays } from '../data.js';
+import { state } from '../state.js';
+import { deleteButton } from '../admin.js';
 
 const STATUS_BY = Object.fromEntries(STATUS.map((s) => [s.value, s]));
 
@@ -113,7 +115,7 @@ function daysSummary(r) {
   return DAYS.filter((d) => days.includes(d.iso)).map((d) => `${d.dow} ${d.label}${d.nye ? ' 🎆' : ''}`).join(', ');
 }
 
-function answerCards(list) {
+function answerCards(list, reload) {
   const answered = list.filter((p) => p.response);
   const waiting = list.filter((p) => !p.response);
   const order = { in: 0, maybe: 1, out: 2 };
@@ -134,13 +136,21 @@ function answerCards(list) {
         h('div', { class: 'answer-prefs' }, PREFS.map((q) => r[q.key] && h('span', { class: 'pill' }, `${q.emoji} ${optionLabel(q, r[q.key])}`))),
         r.note && h('p', { class: 'answer-quote' }, '💬 « ', r.note, ' »'),
         h('p', { class: 'muted small' }, `Mis à jour ${timeAgo(r.updated_at)}`),
+        state.isAdmin && h('div', { class: 'del-row' },
+          deleteButton(`les réponses de ${p.name}`, { table: 'response', id: p.id }, reload),
+          deleteButton(`${p.name} (la personne et ses réponses)`, { table: 'participant', id: p.id }, reload),
+        ),
       );
     })) : h('p', { class: 'muted' }, 'Aucune réponse pour l’instant. Va remplir le formulaire !'),
-    waiting.length ? h('p', { class: 'muted small waiting' }, '⏳ Pas encore répondu : ', waiting.map((p) => p.name).join(', ')) : null,
+    waiting.length ? h('p', { class: 'muted small waiting' }, '⏳ Pas encore répondu : ',
+      state.isAdmin
+        ? waiting.map((p) => h('span', { class: 'person-del' }, p.name,
+          deleteButton(p.name, { table: 'participant', id: p.id }, reload), ' '))
+        : waiting.map((p) => p.name).join(', ')) : null,
   );
 }
 
-function draw(root, data) {
+function draw(root, data, ctx) {
   const list = people(data);
   root.replaceChildren(
     h('header', { class: 'page-head' },
@@ -150,7 +160,7 @@ function draw(root, data) {
     headcount(list),
     dayGrid(list),
     prefBreakdown(list),
-    answerCards(list),
+    answerCards(list, () => ctx.rerender()),
     h('div', { class: 'cta-row' }, h('a', { href: '#/formulaire', class: 'btn btn-primary' }, '📝 Remplir / modifier ma réponse')),
   );
 }
@@ -158,7 +168,7 @@ function draw(root, data) {
 export function render(root, ctx) {
   root.append(loading());
   const load = () => api.getAll().then((data) => {
-    if (ctx.isActive()) draw(root, data);
+    if (ctx.isActive()) draw(root, data, ctx);
   }).catch((err) => {
     if (ctx.isActive()) root.replaceChildren(errorBox(messageFor(err), () => { root.replaceChildren(loading()); load(); }));
   });

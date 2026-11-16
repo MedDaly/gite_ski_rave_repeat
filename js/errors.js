@@ -9,6 +9,7 @@ export class ApiError extends Error {
 
 const MESSAGES = {
   bad_password: 'Mot de passe incorrect.',
+  bad_admin_password: 'Mot de passe admin incorrect (ou changé). Mode admin désactivé.',
   reserved_name: '« Invité » est déjà pris par tout le monde 😅 Choisis un vrai prénom.',
   invalid: 'Il y a un souci dans ce que tu as rempli.',
   not_found: 'Introuvable. Quelqu’un l’a peut-être supprimé.',

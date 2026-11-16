@@ -517,3 +517,24 @@ main:focus { outline: none; }
 .comment-body { white-space: pre-wrap; overflow-wrap: anywhere; }
 .comment-form { display: flex; flex-direction: column; gap: 6px; }
 .comment-form-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+
+/* ---------- Admin ---------- */
+.admin-link {
+  border: 0; background: transparent; color: var(--muted); font: inherit; font-size: .8rem;
+  min-width: 32px; min-height: 32px; cursor: pointer; opacity: .6;
+}
+.admin-link.admin-on { opacity: 1; color: var(--danger); font-weight: 700; }
+.del-btn {
+  min-width: 44px; min-height: 44px; border-radius: 999px; flex: none;
+  border: 2px solid var(--danger); background: var(--surface); color: var(--danger);
+  font-size: 1.05rem; cursor: pointer;
+}
+.del-btn:disabled { opacity: .5; }
+.del-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 8px; }
+.del-row .del-btn { min-height: 40px; padding: 0 12px; font-size: .9rem; font-weight: 700; }
+.comment { display: flex; gap: 8px; align-items: flex-start; }
+.comment-main { flex: 1; min-width: 0; }
+.comment .del-btn { min-width: 36px; min-height: 36px; font-size: .9rem; }
+.person-del { display: inline-flex; align-items: center; gap: 4px; }
+.person-del .del-btn { min-width: 32px; min-height: 32px; font-size: .8rem; }
+.admin-banner { background: var(--out-soft); border-color: var(--danger); }

@@ -1,6 +1,7 @@
 // Entry point: password gate → identity picker → router.
 import { api, MOCK, onAuthError } from './api.js';
-import { state, onIdentityChange } from './state.js';
+import { state, onIdentityChange, onAdminChange } from './state.js';
+import { renderAdminControl } from './admin.js';
 import { GUEST, TRIP } from './config.js';
 import { h, toast } from './dom.js';
 import { messageFor } from './errors.js';
@@ -181,6 +182,12 @@ export function openIdentityPicker({ required = false } = {}) {
 
 document.getElementById('identity-chip').addEventListener('click', () => openIdentityPicker());
 
+const adminControl = document.getElementById('admin-control');
+onAdminChange(() => {
+  renderAdminControl(adminControl);
+  if (!shell.hidden) rerenderRoute({ keepScroll: true });
+});
+
 onIdentityChange(() => {
   updateIdentityChip();
   if (!shell.hidden) rerenderRoute({ keepScroll: true });
@@ -193,6 +200,7 @@ function enterApp() {
   shell.hidden = false;
   updateIdentityChip();
   document.getElementById('footer-extra').textContent = MOCK ? '🧪 mode démo (données fictives)' : `${TRIP.name} 2026`;
+  renderAdminControl(adminControl);
   startRouter(main, { openIdentityPicker });
   if (!state.identity) openIdentityPicker({ required: true });
 }

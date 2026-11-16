@@ -1,7 +1,7 @@
 // Public configuration. The Supabase URL and anon key are public by design.
 // NEVER put passwords in this file.
-export const SUPABASE_URL = '';      // filled in phase 3
-export const SUPABASE_ANON_KEY = ''; // filled in phase 3
+export const SUPABASE_URL = 'https://puvnnqwvgkvztjabmcdd.supabase.co';
+export const SUPABASE_ANON_KEY = 'sb_publishable_yTAWvvGYQjpzOnmqEae2UQ_imig0B5K'; // public by design
 
 export const GUEST = 'Invité';
 

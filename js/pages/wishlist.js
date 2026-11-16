@@ -5,6 +5,7 @@ import { AREAS, LIMITS, GUEST, GITES_DE_FRANCE_URL } from '../config.js';
 import { h, toast, loading, errorBox, timeAgo, plural } from '../dom.js';
 import { messageFor } from '../errors.js';
 import { gitesWithVotes } from '../data.js';
+import { deleteButton } from '../admin.js';
 
 const AREA_LABEL = Object.fromEntries(AREAS.map((a) => [a.value, a.label]));
 const me = () => state.identity || GUEST;
@@ -115,8 +116,11 @@ function giteCard(g, handlers, openComments) {
   },
   h('summary', {}, `💬 ${plural(g.comments.length, 'commentaire', 'commentaires')}`),
   h('ul', { class: 'comment-list' }, g.comments.map((c) => h('li', { class: 'comment' },
-    h('p', { class: 'comment-meta' }, h('strong', {}, c.author), h('span', { class: 'muted' }, ` · ${timeAgo(c.created_at)}`)),
-    h('p', { class: 'comment-body' }, c.body),
+    h('div', { class: 'comment-main' },
+      h('p', { class: 'comment-meta' }, h('strong', {}, c.author), h('span', { class: 'muted' }, ` · ${timeAgo(c.created_at)}`)),
+      h('p', { class: 'comment-body' }, c.body),
+    ),
+    state.isAdmin && deleteButton(`le commentaire de ${c.author}`, { table: 'comment', id: c.id }, handlers.reload),
   ))),
   commentForm,
   );
@@ -141,6 +145,7 @@ function giteCard(g, handlers, openComments) {
           onclick: () => handlers.vote(g.id),
         }, h('span', { 'aria-hidden': 'true' }, '👍'), h('span', { class: 'vote-count' }, g.voters.length)),
         link && h('a', { href: link, target: '_blank', rel: 'noopener noreferrer', class: 'btn btn-secondary' }, 'Voir l’annonce ↗'),
+        state.isAdmin && deleteButton(`le gîte « ${g.name} » (avec ses votes et commentaires)`, { table: 'gite', id: g.id }, handlers.reload),
       ),
       g.voters.length ? h('p', { class: 'voters small' }, '👍 ', g.voters.join(', ')) : h('p', { class: 'voters small muted' }, 'Pas encore de vote. Sois le premier ou la première !'),
       comments,
@@ -165,6 +170,7 @@ function draw(root, ctx, initial) {
   }
 
   const handlers = {
+    reload: () => ctx.rerender(),
     async vote(giteId) {
       const voter = me();
       const idx = data.votes.findIndex((v) => v.gite_id === giteId && v.voter === voter);
