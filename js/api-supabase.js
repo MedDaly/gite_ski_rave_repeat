@@ -37,3 +37,9 @@ export const upsertResponse = (pw, name, fields) => rpc('upsert_response', { pw,
 export const addGite = (pw, fields, addedBy) => rpc('add_gite', { pw, p_fields: fields, p_added_by: addedBy });
 export const toggleVote = (pw, giteId, voter) => rpc('toggle_vote', { pw, p_gite_id: giteId, p_voter: voter });
 export const addComment = (pw, giteId, author, body) => rpc('add_comment', { pw, p_gite_id: giteId, p_author: author, p_body: body });
+
+export async function adminCheck(adminPw) {
+  return (await rpc('admin_check', { admin_pw: adminPw })) === true;
+}
+export const adminDelete = (adminPw, table, id, voter) =>
+  rpc('admin_delete', { admin_pw: adminPw, p_table: table, p_id: id, p_voter: voter ?? null });

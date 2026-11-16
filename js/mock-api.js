@@ -5,6 +5,7 @@ import { ApiError } from './errors.js';
 import { DAYS, GUEST, PREFS, AREAS, LIMITS } from './config.js';
 
 export const MOCK_PASSWORD = 'raclette';
+export const MOCK_ADMIN_PASSWORD = 'admin';
 const STORE_KEY = 'gh_mock_db';
 
 const now = Date.now();
@@ -219,4 +220,32 @@ export async function addComment(pw, giteId, author, body) {
   db.comments.push(c);
   save();
   return clone(c);
+}
+
+export async function adminCheck(adminPw) {
+  await wait(300);
+  return adminPw === MOCK_ADMIN_PASSWORD;
+}
+
+export async function adminDelete(adminPw, table, id, voter) {
+  await wait(300);
+  if (adminPw !== MOCK_ADMIN_PASSWORD) throw new ApiError('bad_password');
+  const before = JSON.stringify(db);
+  switch (table) {
+    case 'gite':
+      db.gites = db.gites.filter((g) => g.id !== id);
+      db.votes = db.votes.filter((v) => v.gite_id !== id);
+      db.comments = db.comments.filter((c) => c.gite_id !== id);
+      break;
+    case 'comment': db.comments = db.comments.filter((c) => c.id !== id); break;
+    case 'participant':
+      db.participants = db.participants.filter((p) => p.id !== id);
+      db.responses = db.responses.filter((r) => r.participant_id !== id);
+      break;
+    case 'response': db.responses = db.responses.filter((r) => r.participant_id !== id); break;
+    case 'vote': db.votes = db.votes.filter((v) => !(v.gite_id === id && v.voter === voter)); break;
+    default: throw new ApiError('invalid', '(table)');
+  }
+  save();
+  return { deleted: JSON.stringify(db) !== before };
 }

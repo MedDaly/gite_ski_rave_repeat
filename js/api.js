@@ -44,4 +44,27 @@ export const api = {
   /** @returns {Promise<{voted: boolean}>} */
   toggleVote: (giteId, voter) => call('toggleVote', giteId, voter),
   addComment: (giteId, author, body) => call('addComment', giteId, author, body),
+
+  /** Admin: checks the admin password (no group password needed). */
+  async adminCheck(adminPw) {
+    const b = await backend();
+    return b.adminCheck(adminPw);
+  },
+  /**
+   * Admin delete. table: 'gite' | 'comment' | 'participant' | 'response' | 'vote'.
+   * A wrong admin password leaves admin mode (but keeps the group session).
+   */
+  async adminDelete(table, id, voter) {
+    const b = await backend();
+    try {
+      return await b.adminDelete(state.adminPassword, table, id, voter);
+    } catch (err) {
+      if (err instanceof ApiError && err.code === 'bad_password') {
+        state.adminPassword = null;
+        throw new ApiError('bad_admin_password');
+      }
+      if (!(err instanceof ApiError)) throw new ApiError('network');
+      throw err;
+    }
+  },
 };
