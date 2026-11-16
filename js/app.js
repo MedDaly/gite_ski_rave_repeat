@@ -32,7 +32,7 @@ function showGate(errorMsg) {
   gate.hidden = false;
   const input = h('input', {
     type: 'password', id: 'pw', name: 'password', autocomplete: 'current-password',
-    required: true, placeholder: 'Le mot de passe du groupe', 'aria-label': 'Mot de passe',
+    required: true, placeholder: 'Mot de passe, ou le code de ta carte bancaire', 'aria-label': 'Mot de passe',
   });
   const error = h('p', { class: 'form-error', role: 'alert' }, errorMsg || '');
   const submit = h('button', { type: 'submit', class: 'btn btn-primary btn-block' }, 'Entrer dans le chalet 🚪');
@@ -65,6 +65,7 @@ function showGate(errorMsg) {
   h('h1', {}, 'Gîte Happens'),
   h('p', { class: 'gate-sub' }, 'Montagne · 26 déc. → 3 janv.'),
   h('p', {}, 'Zone réservée aux copains. Le mot de passe, s’il te plaît :'),
+  h('p', { class: 'hint' }, 'À défaut, le code de ta carte bancaire fera très bien l’affaire 😇'),
   input,
   error,
   submit,
@@ -143,6 +144,7 @@ export function openIdentityPicker({ required = false } = {}) {
     type: 'button', class: 'btn btn-ghost btn-block', onclick: () => choose(GUEST),
   }, '👀 Continuer en Invité'),
   h('p', { class: 'hint' }, 'En Invité, tu peux tout voir, voter et proposer des gîtes, mais pas remplir le formulaire.'),
+  h('button', { type: 'button', class: 'btn btn-ghost btn-sm logout-in-modal', onclick: () => logout() }, '🚪 Se déconnecter'),
   );
 
   const backdrop = h('div', {
@@ -192,6 +194,20 @@ onIdentityChange(() => {
   updateIdentityChip();
   if (!shell.hidden) rerenderRoute({ keepScroll: true });
 });
+
+/* ---------- Logout ---------- */
+function logout() {
+  if (!confirm('Se déconnecter ? Il faudra retaper le mot de passe.')) return;
+  state.password = null;
+  document.querySelectorAll('.modal-backdrop').forEach((m) => m.remove());
+  document.body.classList.remove('no-scroll');
+  identityModalOpen = false;
+  showGate(); // hides the app first, so clearing the rest doesn't re-render pages
+  state.adminPassword = null;
+  state.identity = null;
+  toast('À bientôt ! 👋');
+}
+document.getElementById('logout-btn').addEventListener('click', logout);
 
 /* ---------- Boot ---------- */
 function enterApp() {
