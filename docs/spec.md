@@ -126,6 +126,8 @@ Visible to everyone, Guest included.
 | Deadline | As soon as possible |
 | Mock mode | `js/mock-api.js` is used with `?mock=1` **or while `SUPABASE_URL` is empty**. Mock password `raclette` (demo only, not a real password). Mock data persists in localStorage; `?mock=reset` restores samples. |
 | Single-choice answers | Tap a selected chip again to clear it (every question is optional). |
+| Supabase client | **Plain `fetch` to PostgREST** (`/rest/v1/rpc/<fn>`) in `js/api-supabase.js` instead of `supabase-js`: we only call RPCs, so no SDK/CDN dependency is needed. Works with a legacy anon key or a new `sb_publishable_` key. |
+| RPC errors | Functions raise `code` or `code: detail` (`bad_password`, `invalid`, `reserved_name`, `not_found`); the frontend maps them to French messages. Admin RPCs (`admin_check`, `admin_delete`) already exist in `schema.sql` for phase 4. |
 | Gîte areas | `chambery` / `aix` / `nature` / `autre`. |
 
 ---
