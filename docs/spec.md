@@ -250,7 +250,7 @@ Each phase is about one session and one PR.
 | **0. Spec** ✅ | This document. | Done. |
 | **1. Skeleton + mock** ✅ | Repo structure, `index.html` shell, theme (light/dark), hash router, nav, password screen, identity picker (name/add/Invité), **mock API** with sample data. | All 4 pages are reachable on a phone with mock data. |
 | **2. Pages UI** ✅ | Accueil (funny pitch in French, countdown, stats), Formulaire (all questions, edit mode, Guest lock), Récap (headcount, day grid, preference breakdown, answers list), Wishlist (cards, vote, comments, add form). | Every flow works on mock data at 390px. |
-| **3. Supabase backend** | `schema.sql` (tables, RLS, RPCs), real `api.js`, organizer setup (3.6 steps 1–2). | Data is shared between two different phones. |
+| **3. Supabase backend** ✅ | `schema.sql` (tables, RLS, RPCs), real `api.js`, organizer setup (3.6 steps 1–2). | Data is shared between two different phones. |
 | **4. Admin + deploy** | Admin mode (delete buttons), GitHub Pages turned on, README with the live URL and how-to. | Link shared in the group chat 🎉 |
 | **5. Polish (optional)** | Animations, snow effect, OG image for link previews in WhatsApp, small fixes from friends' feedback. | Organizer happy. |
 
