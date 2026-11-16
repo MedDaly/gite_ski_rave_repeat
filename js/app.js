@@ -64,7 +64,7 @@ function showGate(errorMsg) {
   h('div', { class: 'gate-emoji', 'aria-hidden': 'true' }, '🏔️🎉'),
   h('h1', {}, 'Gîte Happens'),
   h('p', { class: 'gate-sub' }, 'Montagne · 26 déc. → 3 janv.'),
-  h('p', {}, 'Zone réservée aux copains. Le mot de passe, s’il te plaît :'),
+  h('p', {}, 'Le mot de passe, s’il te plaît :'),
   h('p', { class: 'hint' }, 'À défaut, le code de ta carte bancaire fera très bien l’affaire 😇'),
   input,
   error,
