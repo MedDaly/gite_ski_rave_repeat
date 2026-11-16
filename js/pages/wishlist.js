@@ -28,9 +28,7 @@ function addGiteForm(onAdded) {
     photo_url: h('input', { type: 'url', name: 'photo_url', maxlength: LIMITS.url, placeholder: 'https://…/photo.jpg', inputmode: 'url' }),
     price: h('input', { type: 'text', name: 'price', maxlength: LIMITS.price, placeholder: 'Ex. : 2 500 € la semaine' }),
     capacity: h('input', { type: 'number', name: 'capacity', min: 1, max: LIMITS.capacityMax, inputmode: 'numeric', placeholder: 'Ex. : 12' }),
-    area: h('select', { name: 'area' },
-      h('option', { value: '' }, '—'),
-      AREAS.map((a) => h('option', { value: a.value }, a.label))),
+    area: h('input', { type: 'text', name: 'area', maxlength: LIMITS.area, placeholder: 'Ex. : Annecy, Les Bauges, Vercors…' }),
     description: h('textarea', { name: 'description', rows: 3, maxlength: LIMITS.description, placeholder: 'Ce qui le rend génial (ou louche)…' }),
   };
   const error = h('p', { class: 'form-error', role: 'alert' });
@@ -64,7 +62,7 @@ function addGiteForm(onAdded) {
   field('Nom *', inputs.name),
   field('Photo (lien d’image)', inputs.photo_url, 'Sur l’annonce : appui long sur la photo → « Copier l’adresse de l’image ».'),
   h('div', { class: 'field-row' }, field('Prix', inputs.price), field('Capacité', inputs.capacity)),
-  field('Coin', inputs.area),
+  field('Coin / lieu', inputs.area),
   field('Description', inputs.description),
   error,
   submit,
@@ -215,7 +213,7 @@ function draw(root, ctx, initial) {
     addGiteForm((g) => { data.gites.push(g); drawList(); }),
     h('p', { class: 'helper-link' }, '🔎 En panne d’idées ? ',
       h('a', { href: GITES_DE_FRANCE_URL, target: '_blank', rel: 'noopener noreferrer' }, 'Cherche sur Gîtes de France ↗'),
-      ' autour de Chambéry, Aix-les-Bains et Les Aillons.'),
+      ' : Savoie, Haute-Savoie, Isère… on regarde large !'),
     list,
   );
 }

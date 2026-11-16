@@ -5,8 +5,8 @@ import { h, plural } from '../dom.js';
 import { statusCounts } from '../data.js';
 
 const PITCH = [
-  ['🏔️', 'La montagne', 'Aillons-Margériaz à deux pas. Des pistes pour les pros, de la luge pour les autres, du vin chaud pour tout le monde.'],
-  ['🌊', 'Le lac', 'Aix-les-Bains et le lac du Bourget. Baignade déconseillée en janvier, balade digestive vivement recommandée.'],
+  ['🏔️', 'La montagne', 'Des stations à portée de raquette. Des pistes pour les pros, de la luge pour les autres, du vin chaud pour tout le monde.'],
+  ['🌲', 'Le grand air', 'Lacs, forêts, villages perchés. Baignade déconseillée en janvier, balade digestive vivement recommandée.'],
   ['🧀', 'Le fromage', 'Raclette, tartiflette, fondue, croziflette. On a fait le calcul : trois repas sur deux seront au fromage.'],
   ['💻', 'Le télétravail', 'Ton boss voit ta caméra, pas tes chaussettes de ski. Wifi exigé, vue sur les sommets offerte.'],
   ['🎆', 'Le Réveillon', 'Le 31, tout le monde est là. Paillettes, playlist douteuse et bonnes résolutions tenues jusqu’au 2 janvier.'],
@@ -48,7 +48,7 @@ export function render(root, ctx) {
       h('p', { class: 'hero-kicker' }, 'Semaine au ski · Réveillon · Télétravail'),
       h('h1', { class: 'hero-title' }, 'Gîte Happens', h('span', { class: 'hero-spark', 'aria-hidden': 'true' }, ' 🎉')),
       h('p', { class: 'hero-dates' }, 'Du samedi 26 décembre 2026 au dimanche 3 janvier 2027'),
-      h('p', { class: 'hero-place' }, '📍 Entre Chambéry, Aix-les-Bains et Aillons-Margériaz 1400'),
+      h('p', { class: 'hero-place' }, '📍 Quelque part dans les Alpes : le coin exact se décide ensemble !'),
       countdown(ctx),
       stats,
       h('div', { class: 'cta-row' },
@@ -60,7 +60,7 @@ export function render(root, ctx) {
     h('section', { class: 'card pitch-intro' },
       h('h2', {}, 'Le pitch'),
       h('p', {}, 'Tu as toujours rêvé de faire tes visios avec vue sur la montagne ? De descendre une rouge avec le style (et la grâce) de Jean-Claude Dusse ? De manger une raclette le midi ET le soir, sans aucun jugement ?'),
-      h('p', {}, 'On loue un gîte en Savoie pour la semaine du Nouvel An. Il y aura de la neige (on croise les doigts), du fromage (ça, c’est sûr) et une soirée du 31 dont on parlera encore en 2030.'),
+      h('p', {}, 'On loue un gîte à la montagne pour la semaine du Nouvel An. Il y aura de la neige (on croise les doigts), du fromage (ça, c’est sûr) et une soirée du 31 dont on parlera encore en 2030.'),
       h('blockquote', {}, '« Sur un malentendu, ça peut marcher. »', h('cite', {}, 'Un grand philosophe savoyard d’adoption')),
     ),
 

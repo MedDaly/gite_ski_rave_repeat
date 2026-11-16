@@ -11,7 +11,7 @@
 A group of friends (5 to 15 people, not settled yet) is organizing an end-of-year week in Savoie:
 
 - **When:** Saturday **26 December 2026** to Sunday **3 January 2027**.
-- **Where:** around **Chambéry / Aix-les-Bains**, close to the **Aillons-Margériaz 1400** ski resort.
+- **Where:** somewhere in the **Alps** (first ideas were around Chambéry / Aix-les-Bains / Aillons-Margériaz, but the group now looks more widely).
 - **What:** rent a gîte for the week, celebrate **New Year's Eve (Réveillon)** together, ski for those who want to, and **remote-work (télétravail)** for those who need to.
 - **Status:** **no gîte has been chosen yet.** The group picks one from a wishlist (main source: Gîtes de France).
 
@@ -64,7 +64,7 @@ A group of friends (5 to 15 people, not settled yet) is organizing an end-of-yea
 The site is mobile-first, with a bottom tab bar or sticky top nav linking the four pages.
 
 #### P1. Accueil (Home): the pitch
-- Trip name **Gîte Happens**, dates, a countdown to 26/12, and the location (Chambéry, Aix-les-Bains, Aillons-Margériaz).
+- Trip name **Gîte Happens**, dates, a countdown to 26/12, and a generic location ("somewhere in the Alps, to be decided together").
 - A **funny pitch** in French: a week in Savoie mixing lake, mountains, raclette, ski, remote work with a view, and a big Réveillon. Tone: humorous and self-mocking. Nods to *Les Bronzés font du ski* are welcome.
 - Short "the concept" section: you come for as long as you like during the week, ski or not, remote-work or not, and everyone's there for New Year's Eve.
 - Live mini-stats pulled from the data, for example "8 in · 3 maybe · 5 gîtes on the wishlist".
@@ -96,12 +96,12 @@ Visible to everyone, Guest included.
 
 #### P4. Wishlist: the gîtes
 - **List of gîte cards, sorted by votes** (highest first), then by date added.
-- **Card contents:** name, **link** (opens the listing in a new tab), optional photo (image URL), optional price, optional capacity, optional area (Chambéry / Aix / Nature / other), short description, "added by <name>".
+- **Card contents:** name, **link** (opens the listing in a new tab), optional photo (image URL), optional price, optional capacity, optional area (free text, e.g. a town or region), short description, "added by <name>".
   - *Note:* Gîtes de France and similar sites block being embedded in an iframe, so we **don't embed the page**. The card plus the link is the "embed".
 - **👍 vote button** with a count and the voters' names. Tap again to remove your own vote.
 - **Comments section** on each card: an expandable thread showing author, text and time.
 - **"+ Ajouter un gîte" form:** URL (required), name (required), and photo URL, price, capacity, area and description (all optional).
-- A helper link to Gîtes de France (search around Chambéry, Aix-les-Bains and Les Aillons).
+- A helper link to Gîtes de France (searching widely: Savoie, Haute-Savoie, Isère…).
 
 ### 2.6 UX & design
 - **Mobile-first.** Design for a 375–390px width first, with large tap targets (≥ 44px) and no horizontal page scroll.
@@ -129,7 +129,8 @@ Visible to everyone, Guest included.
 | Supabase client | **Plain `fetch` to PostgREST** (`/rest/v1/rpc/<fn>`) in `js/api-supabase.js` instead of `supabase-js`: we only call RPCs, so no SDK/CDN dependency is needed. Works with a legacy anon key or a new `sb_publishable_` key. |
 | RPC errors | Functions raise `code` or `code: detail` (`bad_password`, `invalid`, `reserved_name`, `not_found`); the frontend maps them to French messages. Admin RPCs (`admin_check`, `admin_delete`) already exist in `schema.sql` for phase 4. |
 | Admin mode | Discreet 🔧 in the footer → admin password (kept in localStorage, `gh_admin_pw`). Shows 🗑️ on gîtes, comments (Wishlist), answers and people (Récap). Votes aren't individually deletable in the UI (the RPC supports it). Mock admin password: `admin`. |
-| Gîte areas | `chambery` / `aix` / `nature` / `autre`. |
+| Gîte areas | **Free text** (≤ 60 chars), e.g. "Annecy", "Les Bauges". Old values `chambery`/`aix`/`nature`/`autre` still display with their labels. |
+| Location scope | Not limited to Chambéry / Aix-les-Bains / Aillons-Margériaz: the group looks more widely in the Alps. Home page wording is generic. |
 
 ---
 
