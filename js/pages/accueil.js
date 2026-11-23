@@ -80,6 +80,7 @@ export function render(root, ctx) {
         h('li', {}, '🥂 Une seule règle : ', h('strong', {}, 'le 31 au soir, tout le monde est là.')),
       ),
       h('p', { class: 'muted' }, 'Le gîte n’est pas encore choisi : propose, vote et commente dans la wishlist !'),
+      h('p', {}, h('a', { href: '#/budget' }, '💶 Combien ça coûte ? Voir l’étude budget (gîte + train + forfait)')),
     ),
 
     h('div', { class: 'cta-row cta-bottom' },

@@ -1,11 +1,12 @@
-// Minimal hash router: #/accueil, #/formulaire, #/recap, #/wishlist
+// Minimal hash router: #/accueil, #/formulaire, #/recap, #/wishlist, #/budget
 import * as accueil from './pages/accueil.js';
 import * as formulaire from './pages/formulaire.js';
 import * as recap from './pages/recap.js';
 import * as wishlist from './pages/wishlist.js';
+import * as budget from './pages/budget.js';
 
-const routes = { accueil, formulaire, recap, wishlist };
-const TITLES = { accueil: 'Accueil', formulaire: 'Formulaire', recap: 'Récap', wishlist: 'Gîtes' };
+const routes = { accueil, formulaire, recap, wishlist, budget };
+const TITLES = { accueil: 'Accueil', formulaire: 'Formulaire', recap: 'Récap', wishlist: 'Gîtes', budget: 'Budget' };
 export const DEFAULT_ROUTE = 'accueil';
 
 let main;
