@@ -60,8 +60,8 @@ A group of friends (5 to 15 people, not settled yet) is organizing an end-of-yea
 - **Users can add things but cannot delete them.** Only the admin can clean up.
 - **Admin mode:** unlocked with a separate **admin password**, entered in a hidden or low-key spot such as the footer. It shows 🗑️ delete buttons everywhere.
 
-### 2.5 Pages (v1 = 4 pages)
-The site is mobile-first, with a bottom tab bar or sticky top nav linking the four pages.
+### 2.5 Pages (v1 = 4 pages, + Budget)
+The site is mobile-first, with a bottom tab bar or sticky top nav linking the pages.
 
 #### P1. Accueil (Home): the pitch
 - Trip name **Gîte Happens**, dates, a countdown to 26/12, and a generic location ("somewhere in the Alps, to be decided together").
@@ -103,6 +103,12 @@ Visible to everyone, Guest included.
 - **"+ Ajouter un gîte" form:** URL (required), name (required), and photo URL, price, capacity, area and description (all optional).
 - A helper link to Gîtes de France (searching widely: Savoie, Haute-Savoie, Isère…).
 
+#### P5. Budget: research report (static)
+- The organizer's cost study (22 Nov 2026), behind the group password at `#/budget` (tab 💶 Budget, plus a link on Accueil).
+- Cost per person for each gîte option = gîte + return train from Paris + 3-day ski pass + car, shown as stacked bars sorted by total, plus a full table, trains, ski areas and "à vérifier" notes.
+- Static data: no backend call. To update, edit the arrays at the top of `js/pages/budget.js`.
+- Tables turn into labelled stacked rows on phones (no horizontal scroll).
+
 ### 2.6 UX & design
 - **Mobile-first.** Design for a 375–390px width first, with large tap targets (≥ 44px) and no horizontal page scroll.
 - **Look:** fun "snow plus New Year's Eve" vibe (snowy mountains plus party/neon touches), with light and dark mode.
@@ -130,6 +136,7 @@ Visible to everyone, Guest included.
 | RPC errors | Functions raise `code` or `code: detail` (`bad_password`, `invalid`, `reserved_name`, `not_found`); the frontend maps them to French messages. Admin RPCs (`admin_check`, `admin_delete`) already exist in `schema.sql` for phase 4. |
 | Admin mode | Discreet 🔧 in the footer → admin password (kept in localStorage, `gh_admin_pw`). Shows 🗑️ on gîtes, comments (Wishlist), answers and people (Récap). Votes aren't individually deletable in the UI (the RPC supports it). Mock admin password: `admin`. |
 | Gîte areas | **Free text** (≤ 60 chars), e.g. "Annecy", "Les Bauges". Old values `chambery`/`aix`/`nature`/`autre` still display with their labels. |
+| Budget page | The research report is a 5th page **Budget** (`#/budget`), not "Récap" (already taken). It lives inside the app so it's behind the password and shares the theme. Its scenario (31/12 → 04/01, 10 people) is the one studied and may differ from the trip dates. |
 | Location scope | Not limited to Chambéry / Aix-les-Bains / Aillons-Margériaz: the group looks more widely in the Alps. Home page wording is generic. |
 
 ---
@@ -220,7 +227,8 @@ comments      (id uuid pk, gite_id uuid → gites on delete cascade, author text
 │       ├── accueil.js
 │       ├── formulaire.js
 │       ├── recap.js
-│       └── wishlist.js
+│       ├── wishlist.js
+│       └── budget.js     # static cost study
 ├── assets/               # images, favicon
 ├── supabase/
 │   ├── schema.sql        # tables + RLS + RPC functions
